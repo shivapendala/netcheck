@@ -1,2 +1,3 @@
-import os
-os.environ.setdefault('PYTEST_DISABLE_PLUGIN_AUTOLOAD', '1')
+import werkzeug
+if not hasattr(werkzeug, '__version__'):
+    werkzeug.__version__ = '3.0.0'
