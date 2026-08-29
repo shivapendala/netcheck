@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NetCheck - Network Device Checker</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1 class="title">NetCheck - Network Device Checker</h1>
+      <p class="subtitle">Monitor your network devices with ease.</p>
+      <form method="POST" action="/" class="device-form">
+        <input type="text" name="name" placeholder="Device Name" required />
+        <input type="text" name="ip" placeholder="IP Address" required />
+        <button type="submit">Add Device</button>
+      </form>
+      <div class="nav-links">
+        <a href="{{ url_for('history_page') }}" class="history-link">View History</a>
+        <a href="{{ url_for('alerts_page') }}" class="history-link">Alerts</a>
+        <a href="{{ url_for('export_devices') }}" class="history-link">Export Devices CSV</a>
+        <a href="{{ url_for('export_history') }}" class="history-link">Export History CSV</a>
+        <a href="{{ url_for('export_alerts') }}" class="history-link">Export Alerts CSV</a>
+      </div>
+      <form method="GET" action="/" class="search-form">
+        <input type="text" name="search" placeholder="Search by name or IP" />
+        <select name="status">
+          <option value="">All</option>
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+      <table class="device-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>IP Address</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in devices %}
+          <tr>
+            <td>{{ d.name }}</td>
+            <td>{{ d.ip }}</td>
+            <td>{{ d.status }}</td>
+            <td>
+              <form method="POST" action="{{ url_for('check_device', device_id=d.id) }}" style="display:inline;">
+                <button type="submit">Check Now</button>
+              </form>
+              <form method="POST" action="{{ url_for('delete_device', device_id=d.id) }}" style="display:inline;margin-left:5px;">
+                <button type="submit" style="background:#e74c0c;">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
