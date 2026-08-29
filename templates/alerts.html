@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NetCheck - Alerts</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1 class="title">NetCheck - Alerts</h1>
+      <p class="subtitle">Offline alerts recorded by the system.</p>
+      <div class="nav-links">
+        <a href="{{ url_for('home') }}" class="history-link">Home</a>
+        <a href="{{ url_for('alerts_page') }}" class="history-link">Refresh</a>
+      </div>
+      <table class="device-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>IP Address</th>
+            <th>Message</th>
+            <th>Alerted At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in alerts %}
+          <tr>
+            <td>{{ a.name }}</td>
+            <td>{{ a.ip }}</td>
+            <td>{{ a.message }}</td>
+            <td>{{ a.alerted_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
